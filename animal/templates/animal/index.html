@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+
+{% extends "animal/base_generic.html" %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,19 +11,21 @@
     <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 </head>
 <body>
-    <h1 class="h1">Список животных</h1>
-    {% if latest_animal_list %}
-            {% for animal in latest_animal_list %}
-                <ul>
-                    <li><a href="{{animal.id}}">{{animal.name}}</a></li>
-                </ul>
-            {% endfor %}
-    {% else %}
-        <p>Животные отсутствуют</p>
-    {% endif %}
-    <form action="create/" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Добавить животное" class="btn btn-primary"/>
-    </form>
+    {% block content %}
+        <h1 class="h1">Список животных</h1>
+        {% if latest_animal_list %}
+                {% for animal in latest_animal_list %}
+                    <ul>
+                        <li><a href="{{animal.id}}">{{animal.name}}</a></li>
+                    </ul>
+                {% endfor %}
+        {% else %}
+            <p>Животные отсутствуют</p>
+        {% endif %}
+        <form action="create/" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Добавить животное" class="btn btn-primary"/>
+        </form>
+    {% endblock %}
 </body>
 </html>

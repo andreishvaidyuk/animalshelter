@@ -1,6 +1,6 @@
-
-
 <!DOCTYPE html>
+
+{% extends "animal/base_generic.html" %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,32 +11,33 @@
     <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 </head>
 <body>
-    <h1 class="h1">{{animal.name}}</h1>
-    <table class="table table-striped table-bordered">
-            <tr>
-                <th>Имя</th>
-                <th>Возраст</th>
-                <th>Дата поступления</th>
-                <th>Вес</th>
-                <th>Рост</th>
-                <th>Особые приметы</th>
-                <th></th>
-            </tr>
-            <tr>
-                <td>{{animal.name}}</td>
-                <td>{{animal.age}}</td>
-                <td>{{animal.arrival_date}}</td>
-                <td>{{animal.weight}}</td>
-                <td>{{animal.height}}</td>
-                <td>{{animal.special_signs}}</td>
-                <td>
-                    <form action="delete/" method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <input type="submit" value="Удалить" class="btn btn-primary"/>
-                    </form>
-                </td>
-            </tr>
-    </table>
+    {% block content %}
+        <table class="table table-striped table-bordered">
+                <tr>
+                    <th>Имя</th>
+                    <th>Возраст</th>
+                    <th>Дата поступления</th>
+                    <th>Вес</th>
+                    <th>Рост</th>
+                    <th>Особые приметы</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>{{animal.name}}</td>
+                    <td>{{animal.age}}</td>
+                    <td>{{animal.arrival_date}}</td>
+                    <td>{{animal.weight}}</td>
+                    <td>{{animal.height}}</td>
+                    <td>{{animal.special_signs}}</td>
+                    <td>
+                        <form action="delete/" method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input type="submit" value="Удалить" class="btn btn-primary"/>
+                        </form>
+                    </td>
+                </tr>
+        </table>
+    {% endblock %}
 </body>
 </html>
