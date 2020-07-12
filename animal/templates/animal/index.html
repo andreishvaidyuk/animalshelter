@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
+    <script type="text/javascript" src="{% static 'jquery/jquery-3.5.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+    <h1 class="h1">Список животных</h1>
+    {% if latest_animal_list %}
+            {% for animal in latest_animal_list %}
+                <ul>
+                    <li><a href="{{animal.id}}">{{animal.name}}</a></li>
+                </ul>
+            {% endfor %}
+    {% else %}
+        <p>Животные отсутствуют</p>
+    {% endif %}
+    <form action="create/" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Добавить животное" class="btn btn-primary"/>
+    </form>
+</body>
+</html>
