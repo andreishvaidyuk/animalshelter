@@ -22,6 +22,7 @@
                   {% else %}
                     <li><a href="{% url 'login' %}?next={{request.path}}">Войти</a></li>
                   {% endif %}
+                  <li><a href="{% url 'api' %}">API</a></li>
               </ul>
          {% endblock %}
           </div>

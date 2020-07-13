@@ -9,4 +9,6 @@ urlpatterns = [
     path('index/<int:pk>/', views.DetailView.as_view(), name='detail'),
     path('index/create/', views.CreateView.as_view(), name='create'),
     path('index/<int:pk>/delete/', views.DeleteView.as_view(), name='delete'),
+    path('api/animals/', views.AnimalView.as_view(), name='api'),
+    path('api/animals/<int:pk>/', views.AnimalView.as_view()),
 ]

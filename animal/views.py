@@ -1,6 +1,11 @@
-from .models import Animal
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.generics import get_object_or_404
+
+from .models import Animal
+from .serializers import AnimalSerializer
 
 
 # представление для отображения приветствия
@@ -39,3 +44,28 @@ class DeleteView(LoginRequiredMixin, PermissionRequiredMixin, generic.DeleteView
     permission_required = 'animal.delete_animal'
 
 
+class AnimalView(APIView):
+    def get(self, request):
+        animals = Animal.objects.all()
+        serializer = AnimalSerializer(animals, many=True)
+        return Response({'animals': serializer.data})
+
+    def post(self, request):
+        animal = request.data.get('animal')
+        serializer = AnimalSerializer(data=animal)
+        if serializer.is_valid(raise_exception=True):
+            animal_saved = serializer.save()
+        return Response({"success": "Животное '{}' сохранено".format(animal_saved.name)})
+
+    def put(self, request, pk):
+        saved_animal = get_object_or_404(Animal.objects.all(), pk=pk)
+        data = request.data.get('animal')
+        serializer = AnimalSerializer(instance=saved_animal, data=data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            animal_saved = serializer.save()
+        return Response({"success": "Животное '{}' обновлено".format(animal_saved.name)})
+
+    def delete(self, request, pk):
+        animal = get_object_or_404(Animal.objects.all(), pk=pk)
+        animal.delete()
+        return Response({'message': "Животное с id {} удалено".format(pk)}, status=204)
